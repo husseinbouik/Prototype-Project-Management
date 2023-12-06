@@ -1,0 +1,12 @@
+<table class="table table-striped text-nowrap">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @include('projects.search')
+    </tbody>
+</table>

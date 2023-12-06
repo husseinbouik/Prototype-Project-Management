@@ -25,72 +25,24 @@
                     <div class="card">
                         <div class="card-header col-md-12">
                             <div class=" p-0">
-                                <div class="input-group input-group-sm float-sm-right col-md-3 p-0">
-                                    <input type="text" name="table_search" class="form-control float-right"
-                                        placeholder="Search">
+                                    <form class="" method="GET" action="{{ route('projects.index') }}">
+                                        <div class="input-group input-group-sm float-sm-right col-md-3 p-0">
+
+                                        <input type="text" name="table_search" class="form-control float-right"
+                                        placeholder="Search" id="searchProjects">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
                                 </div>
+                                    </form>
+                            
                             </div>
                         </div>
 
                         <div class="card-body table-responsive p-0">
-                            <table class="table table-striped text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Projet 1</td>
-                                        <td>
-                                            Description de projet 1.
-                                        </td>
-                                        <td>
-                                            <a href="./edit.html" class="btn btn-sm btn-default"><i
-                                                    class="fa-solid fa-pen-to-square"></i></a>
-                                            <a href="././tache/index.html"
-                                                class="btn btn-sm btn-default mx-2">View Tasks</a>
-                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                    class="fa-solid fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Projet 2</td>
-                                        <td>
-                                            Description de projet 2.
-                                        </td>
-                                        <td>
-                                            <a href="./edit.html" class="btn btn-sm btn-default"><i
-                                                    class="fa-solid fa-pen-to-square"></i></a>
-                                            <a href="././tache/index.html"
-                                                class="btn btn-sm btn-default mx-2">View Tasks</a>
-                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                    class="fa-solid fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Projet 3</td>
-                                        <td>
-                                            Description de projet 3.
-                                        </td>
-                                        <td>
-                                            <a href="./edit.html" class="btn btn-sm btn-default"><i
-                                                    class="fa-solid fa-pen-to-square"></i></a>
-                                            <a href="././tache/index.html"
-                                                class="btn btn-sm btn-default mx-2">View Tasks</a>
-                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                    class="fa-solid fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            @include('projects.table') {{-- Include the table partial --}}
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center p-2">
@@ -103,13 +55,8 @@
                                     EXPORT</button>
                             </div>
                             <div class="mr-5">
-                                <ul class="pagination  m-0 float-right">
-                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
-                                    <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                                </ul>
+                                {{ $projects->links('pagination::bootstrap-4') }}
+
                             </div>
                         </div>
                     </div>
@@ -118,6 +65,36 @@
         </div>
     </section>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    // Add this script for instant search
+    $(document).ready(function() {
+function fetch_data(page, search) {
+    $.ajax({
+// Update the URL to the correct route
+url: "{{ route('projects.index') }}?page=" + page + "&searchProjects=" + search,
+        success: function(data) {
+            // $('tbody').html('');
+            $('tbody').html(data);
+        }
+    });
+}
+
+$('body').on('click', '.pagination a', function(param) {
+    param.preventDefault();
+    var page = $(this).attr('href').split('page=')[1];
+    var search = $('#searchProjects').val();
+    fetch_data(page, search);
+});
+
+$('body').on('keyup', '#searchProjects', function() {
+    var search = $('#searchProjects').val();
+    var page = $('#page_hidden').val();
+    fetch_data(page, search);
+});
+fetch_data(1, '');
+});
+</script>
 @endsection
 
        
