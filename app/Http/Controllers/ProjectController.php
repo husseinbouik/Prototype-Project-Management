@@ -17,20 +17,31 @@ class ProjectController extends Controller
         $this->projectRepository = $projectRepository;
     }
 
+    
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $searchProjects = $request->get('searchProjects');
-            $searchProjects = str_replace(" ", "%", $searchProjects);
+            $searchQuery = $request->input('searchProjects');
+            $projects = $this->projectRepository->searchProjects($searchQuery);
 
-            $projects = $this->projectRepository->searchProjects($searchProjects);
-
+            if ($searchQuery !== null) {
+                $searchQuery = str_replace(" ", "%", $searchQuery);
+    
+                $projects = $this->projectRepository->searchProjects($searchQuery);
+    
+                // Render the search view for AJAX requests
+                return view('projects.search', compact('projects'))->render();
+            }
             return view('projects.search', compact('projects'))->render();
+
         }
-
+    
+        // Get paginated projects for non-AJAX requests
         $projects = $this->projectRepository->getAllProjects();
-
-        return view('projects.index', ['projects' => $projects]);
+    
+        // Pass the paginated data to the view
+        return view('projects.index', compact('projects'));
     }
 
     // ... (other methods remain unchanged)

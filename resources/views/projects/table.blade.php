@@ -1,4 +1,4 @@
-<table class="table table-striped text-nowrap">
+<table class="table table-striped text-nowrap ">
     <thead>
         <tr>
             <th>Name</th>
@@ -10,3 +10,4 @@
         @include('projects.search')
     </tbody>
 </table>
+<input type="hidden" id="hidden_page" value="1">

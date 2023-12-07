@@ -27,9 +27,8 @@
                             <div class=" p-0">
                                     <form class="" method="GET" action="{{ route('projects.index') }}">
                                         <div class="input-group input-group-sm float-sm-right col-md-3 p-0">
+                                            <input type="search" class="form-control form-control-lg" name="searchProjects" id="searchProjects" placeholder="Recherche" value="{{ !empty($search) ? $search : '' }}">
 
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                        placeholder="Search" id="searchProjects">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
@@ -45,7 +44,7 @@
                             @include('projects.table') {{-- Include the table partial --}}
                         </div>
 
-                        <div class="d-flex justify-content-between align-items-center p-2">
+                        {{-- <div class="d-flex justify-content-between align-items-center p-2">
                             <div class="d-flex align-items-center mb-2">
                                 <button type="button" class="btn  btn-default btn-sm">
                                     <i class="fa-solid fa-file-arrow-down"></i>
@@ -54,11 +53,11 @@
                                     <i class="fa-solid fa-file-export"></i>
                                     EXPORT</button>
                             </div>
-                            <div class="mr-5">
+                            <div class="pagination">
                                 {{ $projects->links('pagination::bootstrap-4') }}
-
                             </div>
-                        </div>
+                            
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -67,34 +66,35 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    // Add this script for instant search
-    $(document).ready(function() {
-function fetch_data(page, search) {
-    $.ajax({
-// Update the URL to the correct route
-url: "{{ route('projects.index') }}?page=" + page + "&searchProjects=" + search,
-        success: function(data) {
-            // $('tbody').html('');
-            $('tbody').html(data);
+    $(document).ready(function () {
+        function fetch_data(page, search) {
+            $.ajax({
+                url: "{{ route('projects.index') }}?page=" + page + "&searchProjects=" + search,
+                success: function(data) {
+                    $('tbody').html(data);
+                }
+            });
         }
+
+        $('body').on('click', '.pagination a', function (param) {
+            param.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            var search = $('#searchProjects').val();
+            fetch_data(page, search);
+        });
+
+        $('body').on('keyup', '#searchProjects', function () {
+            var search = $('#searchProjects').val();
+            var page = $('#hidden_page').val();
+            fetch_data(page, search);
+        });
+
+        fetch_data(1, '');
     });
-}
-
-$('body').on('click', '.pagination a', function(param) {
-    param.preventDefault();
-    var page = $(this).attr('href').split('page=')[1];
-    var search = $('#searchProjects').val();
-    fetch_data(page, search);
-});
-
-$('body').on('keyup', '#searchProjects', function() {
-    var search = $('#searchProjects').val();
-    var page = $('#page_hidden').val();
-    fetch_data(page, search);
-});
-fetch_data(1, '');
-});
 </script>
+
+
+
 @endsection
 
        
