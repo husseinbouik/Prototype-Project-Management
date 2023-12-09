@@ -30,89 +30,37 @@
                             <div class="d-flex justify-content-between">
                                 <div class="dropdown">
                                     <i class="fa-solid fa-filter" style="color: #000505;"></i>
-                                    <button class="btn btn-sm mr-3 dropdown-toggle btnAddSelect" type="button"
-                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
+                                    <button class="btn btn-sm mr-3 dropdown-toggle btnAddSelect" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Project1
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item"
-                                            href="/projects/tasks">Project2</a>
-                                        <a class="dropdown-item"
-                                            href="/projects/tasks">Project3</a>
-
+                                        <a class="dropdown-item" href="/tasks/tasks">Project2</a>
+                                        <a class="dropdown-item" href="/tasks/tasks">Project3</a>
                                     </div>
                                 </div>
-                                <div class=" p-0">
-                                    <div class="input-group input-group-sm ">
-                                        <input type="text" name="table_search" class="form-control"
-                                            placeholder="Search">
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
+                                <div class="p-0">
+                                    <form class="" method="GET" action="{{ route('tasks.index') }}">
+                                        <div class="input-group input-group-sm float-sm-right col-md-6 p-0">
+                                            <input type="search" class="form-control form-control-lg" name="searchTasks" id="searchTasks"
+                                                placeholder="Recherche" value="{{ !empty($search) ? $search : '' }}">
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
-                           
                         </div>
+                        
 
                         <div class="card-body table-responsive p-0">
-                            <table class="table table-striped text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>Name task</th>
-                                        <th>Name project</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>tache 1</td>
-                                        <td>
-                                            Project1
-                                        </td>
-                                        <td>Description</td>
-                                        <td>
-                                            <a href="./edit.html" class="btn btn-sm btn-default"><i
-                                                    class="fa-solid fa-pen-to-square"></i></a>
-                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                    class="fa-solid fa-trash"></i></button>
-                                        </td>
+                            @include('tasks.table') {{-- Include the table partial --}}
 
-                                    </tr>
-                                    <tr>
-                                        <td>tache 2</td>
-                                        <td>
-                                            Project1
-                                        </td>
-                                        <td>Description</td>
-                                        <td>
-                                            <a href="./edit.html" class="btn btn-sm btn-default"><i
-                                                    class="fa-solid fa-pen-to-square"></i></a>
-                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                    class="fa-solid fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>tache 3</td>
-                                        <td>
-                                            Project1
-                                        </td>
-                                        <td>Description</td>
-                                        <td>
-                                            <a href="./edit.html" class="btn btn-sm btn-default"><i
-                                                    class="fa-solid fa-pen-to-square"></i></a>
-                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                    class="fa-solid fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center p-2">
+                        {{-- <div class="d-flex justify-content-between align-items-center p-2">
                             <div class="d-flex align-items-center mb-2 ml-2 mt-2">
                                 <button type="button" class="btn  btn-default btn-sm">
                                     <i class="fa-solid fa-file-arrow-down"></i>
@@ -130,7 +78,7 @@
                                     <li class="page-item"><a class="page-link" href="#">»</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>
@@ -139,5 +87,33 @@
 
     </section>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function fetch_data(page, search) {
+            $.ajax({
+                url: "{{ route('tasks.index') }}?page=" + page + "&searchTasks=" + search,
+                success: function(data) {
+                    $('tbody').html(data);
+                }
+            });
+        }
+
+        $('body').on('click', '.pagination a', function (param) {
+            param.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            var search = $('#searchTasks').val();
+            fetch_data(page, search);
+        });
+
+        $('body').on('keyup', '#searchTasks', function () {
+            var search = $('#searchTasks').val();
+            var page = $('#hidden_page').val();
+            fetch_data(page, search);
+        });
+
+        fetch_data(1, '');
+    });
+</script>
 
 @endsection

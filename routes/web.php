@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -18,25 +19,20 @@ use Illuminate\Support\Facades\Route;
 
 // Tasks Routes
 Route::prefix('tasks')->group(function () {
-    Route::get('/', function () {
-        return view('tasks.index');
-    })->name('tasks.index');
-
-    Route::get('/create', function () {
-        return view('tasks.create');
-    })->name('tasks.create');
-
-    Route::get('/edit', function () {
-        return view('tasks.edit');
-    })->name('tasks.edit');
+    Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
+    Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
+    Route::post('/', [TaskController::class, 'store'])->name('tasks.store');
+    Route::get('/{tasks}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+    Route::post('/{tasks}', [TaskController::class, 'update'])->name('tasks.update');
+    Route::delete('/{tasks}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 });
 
+
 // Projects Routes
-Route::prefix('projects')->group(function () {
+Route::prefix('')->group(function () {
     Route::get('/', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/create', [ProjectController::class, 'create'])->name('projects.create');
     Route::post('/', [ProjectController::class, 'store'])->name('projects.store');
-    Route::get('/{project}', [ProjectController::class, 'show'])->name('projects.show');
     Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
     Route::post('/{project}', [ProjectController::class, 'update'])->name('projects.update');
     Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
@@ -62,9 +58,4 @@ Route::prefix('members')->group(function () {
 Route::get('login', function () {
     return view('auth.login');
 })->name('login');
-
-// Welcome Page or Dashboard
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
 

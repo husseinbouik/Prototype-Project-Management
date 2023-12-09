@@ -70,7 +70,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{ url('/projects') }}" class="nav-link">
+                            <a href="{{ route('projects.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-table"></i>
                                 <p>
                                     Projects
@@ -78,7 +78,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/tasks') }}" class="nav-link">
+                            <a href="{{ route('tasks.index') }}" class="nav-link">
                                 <i class="fa-solid fa-users pl-1 pr-1"></i>
                                 <p>
                                     Tasks

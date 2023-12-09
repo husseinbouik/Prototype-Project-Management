@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Project Management')
+@section('title', 'Task Management')
 @section('content')
 
 <div class="content-wrapper" style="min-height: 1302.4px;">
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Projects</h1>
+                    <h1>Tasks</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Edit Project</li>
-                        <li class="breadcrumb-item"><a href="{{ url('/projects') }}">Project</a> </li>
+                        <li class="breadcrumb-item active">Edit Task</li>
+                        <li class="breadcrumb-item"><a href="{{ url('/taks') }}">Task</a> </li>
                     </ol>
                 </div>
             </div>
@@ -27,24 +27,24 @@
 
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Project</h3>
+                            <h3 class="card-title">Edit Task</h3>
                         </div>
                         <form
                             method="POST"
-                            action="{{ isset($project) ? route('projects.update', $project->id) : route('projects.store') }}">
+                            action="{{ isset($task) ? route('tasks.update', $task->id) : route('tasks.store') }}">
                             @csrf
                             <div class="card-body">
-                            @if(isset($project))
+                            @if(isset($task))
                             <div class="form-group">
                                 <label for="taskId">Identifiant</label>
                                 <input type="text" class="form-control" id="taskId" name="taskId"
-                                    placeholder="Enter Id" value="{{ $project->id }}" readonly>
+                                    placeholder="Enter Id" value="{{ $task->id }}" readonly>
                             </div>
                             @endif
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name </label>
                                     <input name="name" type="text" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Enter name" value="{{ isset($project) ? $project->name : old('name') }}">
+                                        placeholder="Enter name" value="{{ isset($task) ? $task->name : old('name') }}">
                                     @error('name')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -52,7 +52,7 @@
 
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea id="description" name="description">{{ isset($project) ? $project->description : old('description') }}</textarea>
+                                    <textarea id="description" name="description">{{ isset($task) ? $task->description : old('description') }}</textarea>
                                     @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
