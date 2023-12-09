@@ -6,9 +6,6 @@
         <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-default">
             <i class="fa-solid fa-pen-to-square"></i>
         </a>
-        <a href="{{ route('tasks.index', ['task_id' => $task->id]) }}" class="btn btn-sm btn-default mx-2">
-            View Tasks
-        </a>
         <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this task?');">
             @csrf
             @method('DELETE')

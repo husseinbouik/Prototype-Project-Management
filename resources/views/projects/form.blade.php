@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <a href="./index.html" class="btn btn-default">Cancel</a>
+                                <a href="{{  route('projects.index') }}" class="btn btn-default">Cancel</a>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>

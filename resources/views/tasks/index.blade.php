@@ -28,22 +28,23 @@
                     <div class="card">
                         <div class="card-header col-md-12">
                             <div class="d-flex justify-content-between">
-                            <div class="dropdown">
-    <i class="fa-solid fa-filter" style="color: #000505;"></i>
-    <button class="btn btn-sm mr-3 dropdown-toggle btnAddSelect" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        @if(isset($selectedProject))
-            {{ $selectedProject->name }}
-        @else
-            Select Project
-        @endif
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        @foreach($projects as $project)
-            <a class="dropdown-item" href="{{ route('tasks.index', ['projectId' => $project->id]) }}">{{ $project->name }}</a>
-        @endforeach
-    </div>
-</div>
+                                <div class="dropdown">
+                                    <i class="fa-solid fa-filter" style="color: #000505;"></i>
+                                    <button class="btn btn-sm mr-3 dropdown-toggle btnAddSelect" type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @if(isset($selectedProject))
+                                            {{ $selectedProject->name }}
+                                        @else
+                                            Select Project
+                                        @endif
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @foreach($projects as $project)
+                                            <a class="dropdown-item" href="#" data-project-id="{{ $project->id }}">{{ $project->name }}</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                
 
                                 <div class="p-0">
                                     <form class="" method="GET" action="{{ route('tasks.index') }}">
@@ -95,31 +96,49 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    $(document).ready(function () {
-        function fetch_data(page, search) {
-            $.ajax({
-                url: "{{ route('tasks.index') }}?page=" + page + "&searchTasks=" + search,
-                success: function(data) {
-                    $('tbody').html(data);
-                }
-            });
+$(document).ready(function () {
+    function fetch_data(page, search, projectId) {
+        // Include projectId in the URL only if it is defined
+        var url = "{{ route('tasks.index') }}?page=" + page + "&searchTasks=" + search;
+        if (projectId !== undefined && projectId !== null) {
+            url += "&projectId=" + projectId;
         }
 
-        $('body').on('click', '.pagination a', function (param) {
-            param.preventDefault();
-            var page = $(this).attr('href').split('page=')[1];
-            var search = $('#searchTasks').val();
-            fetch_data(page, search);
+        $.ajax({
+            url: url,
+            success: function (data) {
+                $('tbody').html(data);
+            }
         });
+    }
 
-        $('body').on('keyup', '#searchTasks', function () {
-            var search = $('#searchTasks').val();
-            var page = $('#hidden_page').val();
-            fetch_data(page, search);
-        });
-
-        fetch_data(1, '');
+    $('body').on('click', '.pagination a', function (param) {
+        param.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        var search = $('#searchTasks').val();
+        var projectId = $('.dropdown-toggle').data('project-id');
+        fetch_data(page, search, projectId);
     });
+
+    $('body').on('keyup', '#searchTasks', function () {
+        var search = $('#searchTasks').val();
+        var page = $('#hidden_page').val();
+        var projectId = $('.dropdown-toggle').data('project-id');
+        fetch_data(page, search, projectId);
+    });
+
+    $('body').on('click', '.dropdown-item', function () {
+        var projectId = $(this).data('project-id');
+        $('.dropdown-toggle').data('project-id', projectId);
+        $('.dropdown-toggle').html($(this).text());
+        var search = $('#searchTasks').val();
+        var page = $('#hidden_page').val();
+        fetch_data(page, search, projectId);
+    });
+
+    fetch_data(1, '', null); // Pass null when initializing to show all tasks
+});
+
 </script>
 
 @endsection

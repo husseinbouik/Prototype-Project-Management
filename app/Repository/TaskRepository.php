@@ -15,24 +15,41 @@ class TaskRepository extends BaseRepository
         parent::__construct($model);
     }
 
-    public function searchTasks($searchQuery)
-    {
-        return $this->model
-            ->where(function ($query) use ($searchQuery) {
-                $query->where('name', 'like', '%' . $searchQuery . '%')
-                    ->orWhere('description', 'like', '%' . $searchQuery . '%');
-            })
-            ->paginate($this->perPage);
+public function searchTasks($searchQuery, $projectId = null)
+{
+    $query = $this->model->where(function ($query) use ($searchQuery) {
+        $query->where('name', 'like', '%' . $searchQuery . '%')
+              ->orWhere('description', 'like', '%' . $searchQuery . '%');
+    });
+
+    if ($projectId !== null) {
+        $query->where('project_id', $projectId);
     }
+
+    return $query->paginate($this->perPage);
+}
+
+public function getTasksByProject($projectId)
+{
+    return $this->model->where('project_id', $projectId)->paginate($this->perPage);
+}
+
 
     public function getAllTasks()
     {
         return $this->model->paginate($this->perPage);
     }
 
-    public function createTask(array $data)
+    public function createTask(array $data, $projectId)
     {
-        return $this->create($data);
+        // Ensure that your Eloquent model is set up to handle the project relationship
+        // and the project_id is assigned properly before saving.
+    
+        $task = new Task($data);
+        $task->project_id = $projectId;
+        $task->save();
+    
+        return $task;
     }
 
     public function getTaskById($id)

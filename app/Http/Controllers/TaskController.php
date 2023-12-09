@@ -22,31 +22,32 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $projects = Project::all();
-
+    
         if ($request->ajax()) {
             $searchQuery = $request->input('searchTasks');
-            $tasks = $this->taskRepository->searchTasks($searchQuery);
-
-            if ($searchQuery !== null) {
+            $projectId = $request->input('projectId');
+    
+            if ($searchQuery !== null || $projectId !== null) {
                 $searchQuery = str_replace(" ", "%", $searchQuery);
-    
-                $tasks = $this->taskRepository->searchTasks($searchQuery);
-    
-                // Render the search view for AJAX requests
+                $tasks = $this->taskRepository->searchTasks($searchQuery, $projectId);
                 return view('tasks.search', compact('tasks'))->render();
             }
+    
+            // If no search query and no project selected, return all tasks
+            $tasks = $this->taskRepository->getAllTasks();
             return view('tasks.search', compact('tasks'))->render();
         }
     
         $tasks = $this->taskRepository->getAllTasks();
-    
-        // Pass the paginated data to the view
-        return view('tasks.index', compact('tasks','projects'));
+        return view('tasks.index', compact('tasks', 'projects'));
     }
+    
 
     public function create()
     {
-        return view('tasks.create');
+        $projects = Project::all();
+
+        return view('tasks.create', compact('projects'));
     }
 
     public function store(Request $request)
@@ -55,10 +56,11 @@ class TaskController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
-            // Add more validation rules as needed
-        ]);
 
-        $this->taskRepository->createTask($data);
+        ]);
+        $projectId = $request->input('project_id');
+
+        $this->taskRepository->createTask($data, $projectId);
 
         // Redirect or respond as needed
         return redirect()->route('tasks.index')->with('success', 'Task created successfully');

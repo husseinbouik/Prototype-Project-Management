@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item active">Edit Task</li>
-                        <li class="breadcrumb-item"><a href="{{ url('/taks') }}">Task</a> </li>
+                        <li class="breadcrumb-item"><a href="{{ url('/tasks') }}">Tasks</a> </li>
                     </ol>
                 </div>
             </div>
@@ -27,23 +27,34 @@
 
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Task</h3>
+                            <h3 class="card-title">{{ isset($task) ? 'Edit Task' : 'Add Task' }}</h3>
                         </div>
                         <form
                             method="POST"
                             action="{{ isset($task) ? route('tasks.update', $task->id) : route('tasks.store') }}">
                             @csrf
                             <div class="card-body">
-                            @if(isset($task))
-                            <div class="form-group">
-                                <label for="taskId">Identifiant</label>
-                                <input type="text" class="form-control" id="taskId" name="taskId"
-                                    placeholder="Enter Id" value="{{ $task->id }}" readonly>
-                            </div>
-                            @endif
+                                @if(isset($task))
+                                    <div class="form-group">
+                                        <label for="taskId">Identifiant</label>
+                                        <input type="text" class="form-control" id="taskId" name="taskId"
+                                            placeholder="Enter Id" value="{{ $task->id }}" readonly>
+                                    </div>
+                                @endif
+                                @if(isset($projects))
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Name </label>
-                                    <input name="name" type="text" class="form-control" id="exampleInputEmail1"
+                                    <label for="project_id">Project</label>
+                                    <select name="project_id" class="form-control" id="project_id">
+                                        <option value="">Select Project</option>
+                                        @foreach($projects as $project)
+                                            <option value="{{ $project->id }}" {{ isset($task) && $task->project_id == $project->id ? 'selected' : '' }}>{{ $project->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @endif
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input name="name" type="text" class="form-control" id="name"
                                         placeholder="Enter name" value="{{ isset($task) ? $task->name : old('name') }}">
                                     @error('name')
                                     <div class="text-danger">{{ $message }}</div>
@@ -60,7 +71,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <a href="./index.html" class="btn btn-default">Cancel</a>
+                                <a href="{{  route('tasks.index') }}" class="btn btn-default">Cancel</a>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
