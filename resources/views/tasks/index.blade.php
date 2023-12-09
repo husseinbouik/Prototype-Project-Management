@@ -28,17 +28,23 @@
                     <div class="card">
                         <div class="card-header col-md-12">
                             <div class="d-flex justify-content-between">
-                                <div class="dropdown">
-                                    <i class="fa-solid fa-filter" style="color: #000505;"></i>
-                                    <button class="btn btn-sm mr-3 dropdown-toggle btnAddSelect" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Project1
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="/tasks/tasks">Project2</a>
-                                        <a class="dropdown-item" href="/tasks/tasks">Project3</a>
-                                    </div>
-                                </div>
+                            <div class="dropdown">
+    <i class="fa-solid fa-filter" style="color: #000505;"></i>
+    <button class="btn btn-sm mr-3 dropdown-toggle btnAddSelect" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        @if(isset($selectedProject))
+            {{ $selectedProject->name }}
+        @else
+            Select Project
+        @endif
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        @foreach($projects as $project)
+            <a class="dropdown-item" href="{{ route('tasks.index', ['projectId' => $project->id]) }}">{{ $project->name }}</a>
+        @endforeach
+    </div>
+</div>
+
                                 <div class="p-0">
                                     <form class="" method="GET" action="{{ route('tasks.index') }}">
                                         <div class="input-group input-group-sm float-sm-right col-md-6 p-0">

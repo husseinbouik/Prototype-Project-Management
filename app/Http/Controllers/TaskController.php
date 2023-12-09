@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Models\Project;
+
 use App\Repository\TaskRepository;
 use App\Http\Requests\FormTaskRequest; // Assuming you have a form request for task validation
 
@@ -19,6 +21,8 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
+        $projects = Project::all();
+
         if ($request->ajax()) {
             $searchQuery = $request->input('searchTasks');
             $tasks = $this->taskRepository->searchTasks($searchQuery);
@@ -37,7 +41,7 @@ class TaskController extends Controller
         $tasks = $this->taskRepository->getAllTasks();
     
         // Pass the paginated data to the view
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasks','projects'));
     }
 
     public function create()
