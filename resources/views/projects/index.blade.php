@@ -4,6 +4,12 @@
 @section('content')
 
 <div class="content-wrapper" style="min-height: 1302.4px;">
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -12,7 +18,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="float-sm-right">
-                        <a href="{{ url('/projects/create') }}" class="btn btnAdd">Add New</a>
+                        <a href="{{ route('projects.create') }}" class="btn btnAdd">Add New</a>
                     </div>
                 </div>
             </div>

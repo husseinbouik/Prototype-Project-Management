@@ -9,11 +9,12 @@
         <a href="{{ route('tasks.index', ['project_id' => $project->id]) }}" class="btn btn-sm btn-default mx-2">
             View Tasks
         </a>
-        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">
+        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this project?');">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
         </form>
+        
     </td>
 </tr>
 @empty

@@ -43,6 +43,54 @@ class ProjectController extends Controller
         // Pass the paginated data to the view
         return view('projects.index', compact('projects'));
     }
+    public function create()
+    {
+        return view('projects.create');
+    }
 
-    // ... (other methods remain unchanged)
+    public function store(Request $request)
+    {
+        // Validate and handle form submission
+        $data = $request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            // Add more validation rules as needed
+        ]);
+
+        $this->projectRepository->createProject($data);
+
+        // Redirect or respond as needed
+        return redirect()->route('projects.index')->with('success', 'Project created successfully');
+    }
+
+     public function edit($id)
+    {
+        $project = $this->projectRepository->getProjectById($id);
+        return view('projects.edit', compact('project'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validate and handle form submission
+        $data = $request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            // Add more validation rules as needed
+        ]);
+
+        $this->projectRepository->update($id, $data);
+
+
+        // Redirect or respond as needed
+        return redirect()->route('projects.index')->with('success', 'Project updated successfully');
+
+    }
+
+    public function destroy($id)
+    {
+        $this->projectRepository->deleteProject($id);
+
+        return redirect()->route('projects.index')->with('success', 'Project deleted successfully');
+    }
+
 }

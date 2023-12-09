@@ -29,7 +29,25 @@ class ProjectRepository extends BaseRepository
     {
         return $this->model->paginate($this->perPage);
     }
+    public function createProject(array $data)
+    {
+        return $this->create($data);
+    }
 
+    public function getProjectById($id)
+    {
+        return $this->find($id);
+    }
+
+    // public function updateProject($id, array $data)
+    // {
+    //     return $this->update($id, $data);
+    // }
+
+    public function deleteProject($id)
+    {
+        return $this->delete($id);
+    }
     public function getFieldData(): array
     {
         return $this->fieldsProject;
