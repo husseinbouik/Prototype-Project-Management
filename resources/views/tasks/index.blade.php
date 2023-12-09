@@ -5,7 +5,11 @@
 @section('content')
 
 <div class="content-wrapper" style="min-height: 1302.4px;">
-
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -40,10 +44,13 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         @foreach($projects as $project)
-                                            <a class="dropdown-item" href="#" data-project-id="{{ $project->id }}">{{ $project->name }}</a>
+                                            <a class="dropdown-item project-dropdown-item" href="#" data-project-id="{{ $project->id }}">
+                                                {{ $project->name }}
+                                            </a>
                                         @endforeach
                                     </div>
                                 </div>
+                                
                                 
 
                                 <div class="p-0">
@@ -96,21 +103,32 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-$(document).ready(function () {
-    function fetch_data(page, search, projectId) {
-        // Include projectId in the URL only if it is defined
-        var url = "{{ route('tasks.index') }}?page=" + page + "&searchTasks=" + search;
-        if (projectId !== undefined && projectId !== null) {
-            url += "&projectId=" + projectId;
+     $(document).ready(function () {
+        // Initialize selected project based on URL parameter
+        var urlParams = new URLSearchParams(window.location.search);
+        var projectIdFromUrl = urlParams.get('project_id');
+        if (projectIdFromUrl !== null) {
+            var selectedProject = $('.project-dropdown-item[data-project-id="' + projectIdFromUrl + '"]');
+            if (selectedProject.length > 0) {
+                $('.dropdown-toggle').data('project-id', projectIdFromUrl);
+                $('.dropdown-toggle').html(selectedProject.text());
+            }
         }
 
-        $.ajax({
-            url: url,
-            success: function (data) {
-                $('tbody').html(data);
+        function fetch_data(page, search, projectId) {
+            // Include projectId in the URL only if it is defined
+            var url = "{{ route('tasks.index') }}?page=" + page + "&searchTasks=" + search;
+            if (projectId !== undefined && projectId !== null) {
+                url += "&projectId=" + projectId;
             }
-        });
-    }
+
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    $('tbody').html(data);
+                }
+            });
+        }
 
     $('body').on('click', '.pagination a', function (param) {
         param.preventDefault();

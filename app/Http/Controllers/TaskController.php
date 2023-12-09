@@ -22,6 +22,7 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $projects = Project::all();
+        $projectId = $request->input('project_id');
     
         if ($request->ajax()) {
             $searchQuery = $request->input('searchTasks');
@@ -32,14 +33,15 @@ class TaskController extends Controller
                 $tasks = $this->taskRepository->searchTasks($searchQuery, $projectId);
                 return view('tasks.search', compact('tasks'))->render();
             }
-    
-            // If no search query and no project selected, return all tasks
-            $tasks = $this->taskRepository->getAllTasks();
             return view('tasks.search', compact('tasks'))->render();
         }
-    
-        $tasks = $this->taskRepository->getAllTasks();
-        return view('tasks.index', compact('tasks', 'projects'));
+        if ($projectId) {
+            $tasks = $this->taskRepository->getTasksByProject($projectId);
+        } else {
+            // If no project_id is provided, get all tasks
+            $tasks = $this->taskRepository->getAllTasks();
+        }
+            return view('tasks.index', compact('tasks', 'projects'));
     }
     
 
