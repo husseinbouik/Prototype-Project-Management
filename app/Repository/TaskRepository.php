@@ -7,7 +7,7 @@ use App\Repository\BaseRepository;
 
 class TaskRepository extends BaseRepository
 {
-    protected $perPage = 10;
+    protected $perPage = 5;
     protected $fieldsTask = ['name', 'description'];
 
     public function __construct(Task $model)

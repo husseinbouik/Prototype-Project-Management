@@ -116,11 +116,14 @@
         }
 
         function fetch_data(page, search, projectId) {
-            // Include projectId in the URL only if it is defined
-            var url = "{{ route('tasks.index') }}?page=" + page + "&searchTasks=" + search;
-            if (projectId !== undefined && projectId !== null) {
-                url += "&projectId=" + projectId;
-            }
+        // Include projectId in the URL only if it is defined
+        var url = "{{ route('tasks.index') }}?page=" + page + "&searchTasks=" + search;
+
+        // Include projectId in the URL only if it is selected
+        if (projectId !== undefined && projectId !== null) {
+            url += "&projectId=" + projectId;
+        }
+
 
             $.ajax({
                 url: url,

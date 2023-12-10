@@ -28,23 +28,23 @@ class TaskController extends Controller
             $searchQuery = $request->input('searchTasks');
             $projectId = $request->input('projectId');
     
-            if ($searchQuery !== null || $projectId !== null) {
-                $searchQuery = str_replace(" ", "%", $searchQuery);
-                $tasks = $this->taskRepository->searchTasks($searchQuery, $projectId);
-                return view('tasks.search', compact('tasks'))->render();
-            }
+            $searchQuery = ($searchQuery !== null) ? str_replace(" ", "%", $searchQuery) : null;
+    
+            $tasks = $this->taskRepository->searchTasks($searchQuery, $projectId);
+    
             return view('tasks.search', compact('tasks'))->render();
         }
+    
         if ($projectId) {
             $tasks = $this->taskRepository->getTasksByProject($projectId);
         } else {
             // If no project_id is provided, get all tasks
             $tasks = $this->taskRepository->getAllTasks();
         }
-            return view('tasks.index', compact('tasks', 'projects'));
+    
+        return view('tasks.index', compact('tasks', 'projects'));
     }
     
-
     public function create()
     {
         $projects = Project::all();
