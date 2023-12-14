@@ -34,13 +34,13 @@
                             action="{{ isset($project) ? route('projects.update', $project->id) : route('projects.store') }}">
                             @csrf
                             <div class="card-body">
-                            @if(isset($project))
-                            <div class="form-group">
-                                <label for="taskId">Identifiant</label>
-                                <input type="text" class="form-control" id="taskId" name="taskId"
-                                    placeholder="Enter Id" value="{{ $project->id }}" readonly>
-                            </div>
-                            @endif
+                                @if(isset($project))
+                                    <div class="form-group">
+                                        <label for="taskId">Identifiant</label>
+                                        <input type="text" class="form-control" id="taskId" name="taskId"
+                                            placeholder="Enter Id" value="{{ $project->id }}" readonly>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name </label>
                                     <input name="name" type="text" class="form-control" id="exampleInputEmail1"
@@ -57,6 +57,26 @@
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                                <!-- New input fields for start_date and end_date -->
+                                <div class="form-group">
+                                    <label for="startDate">Start Date</label>
+                                    <input type="date" class="form-control" id="startDate" name="start_date"
+                                    value="{{ isset($project) ? ($project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('Y-m-d') : old('start_date')) : '' }}">
+                                    @error('start_date')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="endDate">End Date</label>
+                                    <input type="date" class="form-control" id="endDate" name="end_date"
+                                    value="{{ isset($project) ? ($project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('Y-m-d') : old('end_date')) : '' }}"
+                                    >
+                                    @error('end_date')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="card-footer">
@@ -69,7 +89,6 @@
                 </div>
             </div>
         </div>
-
     </section>
 
 </div>

@@ -54,6 +54,8 @@ class ProjectController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
+            'start_date' => 'required',
+            'end_date' => 'required',
             // Add more validation rules as needed
         ]);
 
@@ -75,6 +77,8 @@ class ProjectController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
+            'start_date' => 'required',
+            'end_date' => 'required',
             // Add more validation rules as needed
         ]);
 

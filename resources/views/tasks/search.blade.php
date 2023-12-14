@@ -2,6 +2,10 @@
 <tr>
     <td>{{ $task->name }}</td>
     <td>{!! $task->description !!}</td>
+    <td>{{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->format('Y-m-d') : '' }}</td>
+    <td>{{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->format('Y-m-d') : '' }}</td>
+    
+
     <td>
         <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-default">
             <i class="fa-solid fa-pen-to-square"></i>

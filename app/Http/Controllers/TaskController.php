@@ -58,6 +58,8 @@ class TaskController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
+            'start_date' => 'required',
+            'end_date' => 'required',
 
         ]);
         $projectId = $request->input('project_id');
@@ -80,6 +82,8 @@ class TaskController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
+            'start_date' => 'required',
+            'end_date' => 'required',
             // Add more validation rules as needed
         ]);
 

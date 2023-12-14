@@ -2,6 +2,9 @@
 <tr>
     <td>{{ $project->name }}</td>
     <td>{!! $project->description !!}</td>
+    <td>{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('Y-m-d') : '' }}</td>
+    <td>{{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('Y-m-d') : '' }}</td>
+
     <td>
         <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-sm btn-default">
             <i class="fa-solid fa-pen-to-square"></i>
@@ -27,9 +30,13 @@
 
 <tr>
     
-    <td>        <div class="pagination">
+    <td>        
+        <div class="pagination">
         {{ $projects->links('pagination::bootstrap-4') }}
-    </div></td>
+    </div>
+</td>
+    <td></td>
+    <td></td>
     <td></td>
     <td>
         <div class="float-left col-md-6 d-flex justify-content-end" >
