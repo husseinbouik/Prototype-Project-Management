@@ -3,7 +3,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +15,28 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// use App\Models\User;
+
+// // Create a new user instance
+// $user = new User();
+
+// // Assign values to fillable properties
+// $user->first_name = 'Project leader';
+// $user->last_name = 'Project leader';
+// $user->email = 'ProjectLeader@gmail.com';
+// $user->password = bcrypt('admin'); // Remember to hash the password
+// $user->role =  'member';
+// // Save the user to the database
+// $user->save();
+
+// Authentication Routes
+Route::get('login', function () {
+    return view('auth.login');
+})->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('Auth');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
 
 
 // Tasks Routes
@@ -53,9 +75,8 @@ Route::prefix('members')->group(function () {
         return view('members.edit');
     })->name('members.edit');
 });
+});
 
-// Authentication Routes
-Route::get('login', function () {
-    return view('auth.login');
-})->name('login');
+
+
 

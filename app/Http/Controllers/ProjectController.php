@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Repository\ProjectRepository;
 use App\Http\Requests\FormProjectRequest; // Assuming you have a form request for project validation
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -21,6 +22,9 @@ class ProjectController extends Controller
 
     public function index(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
         if ($request->ajax()) {
             $searchQuery = $request->input('searchProjects');
             $projects = $this->projectRepository->searchProjects($searchQuery);
