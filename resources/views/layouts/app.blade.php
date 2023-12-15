@@ -65,16 +65,6 @@
 
             <!-- Sidebar -->
             <div class="sidebar">
-             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <i class="fas fa-user-circle fa-2x"></i>
-                    </div>
-                    <div class="info">
-                        @auth
-                            <a href="#" class="d-block">{{ $userName }}</a>
-                        @endauth
-                    </div>
-                </div>
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -105,18 +95,13 @@
                         </li>
                         <!-- Logout button -->
                         <li class="nav-item">
-                            <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a href="#" class="nav-link">
                                 <i class="fas fa-sign-out-alt pl-1 pr-1"></i>
                                 <p>
-                                    Logout ({{ Auth::user()->name ?? '' }})
+                                    Logout
                                 </p>
                             </a>
                         </li>
-                        
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                        
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
