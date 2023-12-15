@@ -78,16 +78,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="role">Role</label>
-                                    <select name="role" id="role" class="form-control">
-                                        <option value="project_leader" {{ (isset($user) && $user->role == 'project_leader') ? 'selected' : '' }}>Admin</option>
-                                        <option value="member" {{ (isset($user) && $user->role == 'member') ? 'selected' : '' }}>User</option>
-                                        <!-- Add more options based on your roles -->
-                                    </select>
+                                    <input name="role" type="text" class="form-control" id="role"
+                                        placeholder="Enter Role" value="{{ isset($user) ? $user->role : old('role') }}">
                                     @error('role')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
                             </div>
 
                             <div class="card-footer">

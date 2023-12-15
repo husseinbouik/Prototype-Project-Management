@@ -1,7 +1,7 @@
 <?php
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
-
+use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -50,31 +50,16 @@ Route::prefix('tasks')->group(function () {
 });
 
 
-// Projects Routes
-Route::prefix('')->group(function () {
-    Route::get('/', [ProjectController::class, 'index'])->name('projects.index');
-    Route::get('/create', [ProjectController::class, 'create'])->name('projects.create');
-    Route::post('/', [ProjectController::class, 'store'])->name('projects.store');
-    Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
-    Route::post('/{project}', [ProjectController::class, 'update'])->name('projects.update');
-    Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-});
-
-
 // Members Routes
 Route::prefix('members')->group(function () {
-    Route::get('/', function () {
-        return view('members.index');
-    })->name('members.index');
-
-    Route::get('/create', function () {
-        return view('members.create');
-    })->name('members.create');
-
-    Route::get('/edit', function () {
-        return view('members.edit');
-    })->name('members.edit');
+    Route::get('/', [MemberController::class, 'index'])->name('members.index');
+    Route::get('/create', [MemberController::class, 'create'])->name('members.create');
+    Route::post('/', [MemberController::class, 'store'])->name('members.store');
+    Route::get('/{member}/edit', [MemberController::class, 'edit'])->name('members.edit');
+    Route::post('/{member}', [MemberController::class, 'update'])->name('members.update');
+    Route::delete('/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
 });
+
 });
 
 
