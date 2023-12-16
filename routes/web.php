@@ -1,6 +1,6 @@
 <?php
-use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -30,7 +30,7 @@ use App\Http\Controllers\AuthController;
 // $user->save();
 
 // Authentication Routes
-Route::get('login', function () {
+Route::get('/', function () {
     return view('auth.login');
 })->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('Auth');
@@ -39,7 +39,16 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
 
 
-// Tasks Routes
+// Projects Routes
+Route::prefix('projects')->group(function () {
+    Route::get('/', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::post('/', [ProjectController::class, 'store'])->name('projects.store');
+    Route::get('/{projects}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+    Route::post('/{projects}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::delete('/{projects}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+});
+
 Route::prefix('tasks')->group(function () {
     Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
     Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
@@ -48,7 +57,6 @@ Route::prefix('tasks')->group(function () {
     Route::post('/{tasks}', [TaskController::class, 'update'])->name('tasks.update');
     Route::delete('/{tasks}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 });
-
 
 // Members Routes
 Route::prefix('members')->group(function () {
