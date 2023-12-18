@@ -15,19 +15,6 @@ use App\Http\Controllers\AuthController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// use App\Models\User;
-
-// // Create a new user instance
-// $user = new User();
-
-// // Assign values to fillable properties
-// $user->first_name = 'Project leader';
-// $user->last_name = 'Project leader';
-// $user->email = 'ProjectLeader@gmail.com';
-// $user->password = bcrypt('admin'); // Remember to hash the password
-// $user->role =  'member';
-// // Save the user to the database
-// $user->save();
 
 // Authentication Routes
 Route::get('/', function () {
