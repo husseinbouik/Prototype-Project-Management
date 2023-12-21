@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item active">Edit Project</li>
-                        <li class="breadcrumb-item"><a href="{{ url('/users') }}">Project</a> </li>
+                        <li class="breadcrumb-item"><a href="{{ url('/projects') }}">Project</a> </li>
                     </ol>
                 </div>
             </div>
@@ -27,71 +27,60 @@
 
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">{{ isset($user) ? 'Edit User' : 'Add User' }}</h3>
+                            <h3 class="card-title">Edit Project</h3>
                         </div>
                         <form
                             method="POST"
-                            action="{{ isset($user) ? route('users.update', $user->id) : route('users.store') }}">
+                            action="{{ isset($project) ? route('projects.update', $project->id) : route('projects.store') }}">
                             @csrf
-                            @if(isset($user))
-                                @method('PUT')
-                            @endif
                             <div class="card-body">
-                                @if(isset($user))
+                                @if(isset($project))
                                     <div class="form-group">
-                                        <label for="userId">User ID</label>
-                                        <input type="text" class="form-control" id="userId" name="userId"
-                                            placeholder="Enter User ID" value="{{ $user->id }}" readonly>
+                                        <label for="taskId">Identifiant</label>
+                                        <input type="text" class="form-control" id="taskId" name="taskId"
+                                            placeholder="Enter Id" value="{{ $project->id }}" readonly>
                                     </div>
                                 @endif
                                 <div class="form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input name="first_name" type="text" class="form-control" id="first_name"
-                                        placeholder="Enter First Name" value="{{ isset($user) ? $user->first_name : old('first_name') }}">
-                                    @error('first_name')
+                                    <label for="exampleInputEmail1">Name </label>
+                                    <input name="name" type="text" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Enter name" value="{{ isset($project) ? $project->name : old('name') }}">
+                                    @error('name')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="last_name">Last Name</label>
-                                    <input name="last_name" type="text" class="form-control" id="last_name"
-                                        placeholder="Enter Last Name" value="{{ isset($user) ? $user->last_name : old('last_name') }}">
-                                    @error('last_name')
+                                    <label for="description">Description</label>
+                                    <textarea id="description" name="description">{{ isset($project) ? $project->description : old('description') }}</textarea>
+                                    @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                                <!-- New input fields for start_date and end_date -->
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input name="email" type="email" class="form-control" id="email"
-                                        placeholder="Enter Email" value="{{ isset($user) ? $user->email : old('email') }}">
-                                    @error('email')
+                                    <label for="startDate">Start Date</label>
+                                    <input type="date" class="form-control" id="startDate" name="start_date"
+                                    value="{{ isset($project) ? ($project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('Y-m-d') : old('start_date')) : '' }}">
+                                    @error('start_date')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input name="password" type="password" class="form-control" id="password"
-                                        placeholder="Enter Password">
-                                    @error('password')
+                                    <label for="endDate">End Date</label>
+                                    <input type="date" class="form-control" id="endDate" name="end_date"
+                                    value="{{ isset($project) ? ($project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('Y-m-d') : old('end_date')) : '' }}"
+                                    >
+                                    @error('end_date')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="role">Role</label>
-                                    <select name="role" id="role" class="form-control">
-                                        <option value="project_leader" {{ (isset($user) && $user->role == 'project_leader') ? 'selected' : '' }}>Admin</option>
-                                        <option value="member" {{ (isset($user) && $user->role == 'member') ? 'selected' : '' }}>User</option>
-                                        <!-- Add more options based on your roles -->
-                                    </select>
-                                    @error('role')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                
                             </div>
 
                             <div class="card-footer">
-                                <a href="{{ route('users.index') }}" class="btn btn-default">Cancel</a>
+                                <a href="{{  route('projects.index') }}" class="btn btn-default">Cancel</a>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
