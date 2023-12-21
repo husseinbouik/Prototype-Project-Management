@@ -3,6 +3,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -20,8 +21,9 @@ use App\Http\Controllers\AuthController;
 Route::get('/', function () {
     return view('auth.login');
 })->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('Auth');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post'); // Change AuthController to LoginController
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/home', [App\Http\Controllers\ProjectController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -56,6 +58,9 @@ Route::prefix('members')->group(function () {
 });
 
 });
+
+
+
 
 
 

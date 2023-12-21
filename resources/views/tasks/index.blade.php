@@ -33,7 +33,7 @@
                         <div class="card-header col-md-12">
                             <div class="d-flex justify-content-between">
                                 <div class="dropdown">
-                                    <i class="fa-solid fa-filter" style="color: #000505;"></i>
+                                    <i class="fas fa-filter" style="color: #000505;"></i>
                                     <button class="btn btn-sm mr-3 dropdown-toggle btnAddSelect" type="button" id="dropdownMenuButton"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         @if(isset($selectedProject))

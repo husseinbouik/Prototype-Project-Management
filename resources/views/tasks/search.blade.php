@@ -8,12 +8,12 @@
 
     <td>
         <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-sm btn-default">
-            <i class="fa-solid fa-pen-to-square"></i>
+            <i class="fas fa-fw fa-pen"></i> <!-- Updated icon class -->
         </a>
         <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this task?');">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-fw fa-trash"></i></button>
         </form>
         
     </td>
@@ -35,10 +35,10 @@
     <td>
         <div class="float-left col-md-6 d-flex justify-content-end" >
             <button type="button" class="btn btn-default mr-2 swalDefaultQuestion">
-                <i class="fas fa-download"></i> export
+                <i class="fas fa-fw fa-download"></i> export
             </button>
             <button type="button" class="btn btn-default swalDefaultQuestion">
-                <i class="fas fa-file-import"></i> import
+                <i class="fas fa-fw fa-file-import"></i> import
             </button>
         </div>
     </td>
