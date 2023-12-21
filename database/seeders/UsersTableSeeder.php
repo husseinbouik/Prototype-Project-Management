@@ -15,8 +15,8 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'first_name' => 'Project leader',
-            'last_name' => 'Project leader',
+            'first_name' => 'Project ',
+            'last_name' => ' leader',
             'email' => 'ProjectLeader@gmail.com',
             'password' => Hash::make('admin123'),
             'role' => 'member',
