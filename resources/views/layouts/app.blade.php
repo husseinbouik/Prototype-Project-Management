@@ -96,7 +96,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/members') }}" class="nav-link">
+                            <a href="{{ route('members.index') }}" class="nav-link">
                                 <i class="fa-solid fa-users pl-1 pr-1"></i>
                                 <p>
                                     Members
