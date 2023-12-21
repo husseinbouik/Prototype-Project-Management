@@ -7,7 +7,7 @@
 
     <td>
         <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-sm btn-default">
-            <i class="fa-solid fa-pen-to-square"></i>
+            <i class="fas fa-edit"></i>
         </a>
         <a href="{{ route('tasks.index', ['project_id' => $project->id]) }}" class="btn btn-sm btn-default mx-2">
             View Tasks
@@ -15,7 +15,7 @@
         <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this project?');">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+            <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
         </form>
         
     </td>
@@ -26,15 +26,12 @@
 </tr>
 @endforelse
 
-
-
 <tr>
-    
     <td>        
         <div class="pagination">
-        {{ $projects->links('pagination::bootstrap-4') }}
-    </div>
-</td>
+            {{ $projects->links('pagination::bootstrap-4') }}
+        </div>
+    </td>
     <td></td>
     <td></td>
     <td></td>

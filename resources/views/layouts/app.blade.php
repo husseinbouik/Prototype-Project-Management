@@ -25,8 +25,8 @@
                                 <img src="https://assets.infyom.com/logo/blue_logo_150x150.png"
                                     class="img-circle elevation-2" alt="User Image">
                                 <p>
-                                    {{ Auth::user()->name }}
-                                    <small>Member since {{ Auth::user()->created_at->format('M. Y') }}</small>
+                                    {{ Auth::user()->first_name }}
+                                    <small>Member since {{ Auth::user()->created_at ? Auth::user()->created_at->format('M. Y') : '' }}</small>
                                 </p>
                             </li>
                             <!-- Menu Footer-->
@@ -49,7 +49,7 @@
             @include('layouts.sidebar')
 
             <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
+            <div class="">
                 @yield('content')
             </div>
 
@@ -58,9 +58,17 @@
                 <div class="float-right d-none d-sm-block">
                     <b>Version</b> 3.1.0
                 </div>
-                <strong>Copyright &copy; 2014-2023 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
-                reserved.
+                <strong>&copy; 2014-2023 <a href="https://adminlte.io">AdminLTE.io</a>. All rights
+                    reserved.</strong>
             </footer>
         </div>
+
+        <!-- JavaScript -->
+        <script>
+            // Toggle sidebar
+            document.querySelector('[data-widget="pushmenu"]').addEventListener('click', function () {
+                document.body.classList.toggle('sidebar-collapse');
+            });
+        </script>
     </body>
 </x-laravel-ui-adminlte::adminlte-layout>
