@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Project Management')
+@section('title', 'User Management')
 @section('content')
 
 <div class="content-wrapper" style="min-height: 1302.4px;">
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Projects</h1>
+                    <h1>Users</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Edit Project</li>
-                        <li class="breadcrumb-item"><a href="{{ url('/users') }}">Project</a> </li>
+                        <li class="breadcrumb-item active">Edit User</li>
+                        <li class="breadcrumb-item"><a href="{{ url('/users') }}">User</a> </li>
                     </ol>
                 </div>
             </div>
@@ -46,8 +46,8 @@
                                 @endif
                                 <div class="form-group">
                                     <label for="first_name">First Name</label>
-                                    <input name="first_name" type="text" class="form-control" id="first_name"
-                                        placeholder="Enter First Name" value="{{ isset($user) ? $user->first_name : old('first_name') }}">
+                                     <input name="first_name" type="text" class="form-control" id="first_name"
+                                       placeholder="Enter First Name" value="{{ isset($user) ? $user->first_name : old('first_name') }}">
                                     @error('first_name')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -68,6 +68,16 @@
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                 <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <select name="role" class="form-control" id="role">
+                                        <option value="leader" {{ isset($user) && $user->role == 'leader' ? 'selected' : '' }}>Leader</option>
+                                        <option value="member" {{ isset($user) && $user->role == 'member' ? 'selected' : '' }}>Member</option>
+                                    </select>
+                                    @error('role')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <input name="password" type="password" class="form-control" id="password"
@@ -76,14 +86,7 @@
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="role">Role</label>
-                                    <input name="role" type="text" class="form-control" id="role"
-                                        placeholder="Enter Role" value="{{ isset($user) ? $user->role : old('role') }}">
-                                    @error('role')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                               
                             </div>
 
                             <div class="card-footer">

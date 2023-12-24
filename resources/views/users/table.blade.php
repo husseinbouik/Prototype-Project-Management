@@ -2,14 +2,13 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Description</th>
-            <th>Start Date</th>
-            <th>End Date</th>
+            <th>Email</th>
+            <th>Role</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @include('tasks.search')
+        @include('users.search')
     </tbody>
 </table>
 <input type="hidden" id="hidden_page" value="1">

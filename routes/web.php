@@ -1,7 +1,7 @@
 <?php
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthController;
@@ -47,14 +47,14 @@ Route::prefix('tasks')->group(function () {
     Route::delete('/{tasks}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 });
 
-// Members Routes
-Route::prefix('members')->group(function () {
-    Route::get('/', [MemberController::class, 'index'])->name('members.index');
-    Route::get('/create', [MemberController::class, 'create'])->name('members.create');
-    Route::post('/', [MemberController::class, 'store'])->name('members.store');
-    Route::get('/{member}/edit', [MemberController::class, 'edit'])->name('members.edit');
-    Route::post('/{member}', [MemberController::class, 'update'])->name('members.update');
-    Route::delete('/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
+// Users Routes
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('users.index');
+    Route::get('/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/', [UserController::class, 'store'])->name('users.store');
+    Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 });
