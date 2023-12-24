@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => ' leader',
             'email' => 'ProjectLeader@gmail.com',
             'password' => Hash::make('admin123'),
-            'role' => 'member',
+            'role' => 'leader',
         ]);
         DB::table('users')->insert([
             'first_name' => 'solicoder',
