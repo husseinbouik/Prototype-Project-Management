@@ -1,54 +1,61 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\Project;
-
 use App\Repository\TaskRepository;
+use App\Repository\ProjectRepository; // Import ProjectRepository
 use App\Http\Requests\FormTaskRequest; // Assuming you have a form request for task validation
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
     protected $taskRepository;
+    protected $projectRepository;
 
-    public function __construct(TaskRepository $taskRepository)
+    public function __construct(TaskRepository $taskRepository, ProjectRepository $projectRepository)
     {
         $this->taskRepository = $taskRepository;
+        $this->projectRepository = $projectRepository;
     }
 
     public function index(Request $request)
     {
-        $projects = Project::all();
+        $projects = $this->projectRepository->getAllProjects(); // Use the project repository
+
         $projectId = $request->input('project_id');
-    
+
         if ($request->ajax()) {
             $searchQuery = $request->input('searchTasks');
             $projectId = $request->input('projectId');
-    
+
             $searchQuery = ($searchQuery !== null) ? str_replace(" ", "%", $searchQuery) : null;
-    
+
             $tasks = $this->taskRepository->searchTasks($searchQuery, $projectId);
-    
+
             return view('tasks.search', compact('tasks'))->render();
         }
-    
+
         if ($projectId) {
             $tasks = $this->taskRepository->getTasksByProject($projectId);
         } else {
             // If no project_id is provided, get all tasks
             $tasks = $this->taskRepository->getAllTasks();
         }
-    
+
         return view('tasks.index', compact('tasks', 'projects'));
     }
-    
+
     public function create()
     {
-        $projects = Project::all();
-
+        
+        $projects = $this->projectRepository->getAllProjects(); // Use the project repository
+        if (Gate::denies('create', Task::class)) {
+            abort(403, 'Unauthorized action.');
+        }
         return view('tasks.create', compact('projects'));
     }
 
@@ -60,8 +67,8 @@ class TaskController extends Controller
             'description' => 'nullable|string',
             'start_date' => 'required',
             'end_date' => 'required',
-
         ]);
+
         $projectId = $request->input('project_id');
 
         $this->taskRepository->createTask($data, $projectId);
@@ -73,11 +80,24 @@ class TaskController extends Controller
     public function edit($id)
     {
         $task = $this->taskRepository->getTaskById($id);
+
+        // Manually check authorization
+        if (Gate::denies('update', $task)) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return view('tasks.edit', compact('task'));
     }
 
     public function update(Request $request, $id)
     {
+        $task = $this->taskRepository->getTaskById($id);
+
+        // Manually check authorization
+        if (Gate::denies('update', $task)) {
+            abort(403, 'Unauthorized action.');
+        }
+
         // Validate and handle form submission
         $data = $request->validate([
             'name' => 'required|string',
@@ -95,6 +115,13 @@ class TaskController extends Controller
 
     public function destroy($id)
     {
+        $task = $this->taskRepository->getTaskById($id);
+
+        // Manually check authorization
+        if (Gate::denies('delete', $task)) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $this->taskRepository->deleteTask($id);
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');

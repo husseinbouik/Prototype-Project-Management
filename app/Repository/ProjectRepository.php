@@ -39,10 +39,10 @@ class ProjectRepository extends BaseRepository
         return $this->find($id);
     }
 
-    // public function updateProject($id, array $data)
-    // {
-    //     return $this->update($id, $data);
-    // }
+    public function updateProject($id, array $data)
+    {
+        return $this->update($id, $data);
+    }
 
     public function deleteProject($id)
     {

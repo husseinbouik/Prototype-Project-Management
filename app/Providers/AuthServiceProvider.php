@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Providers;
+use App\Models\Project; // Import the missing class
+use App\Policies\ProjectPolicy; // Import the missing class
+use App\Models\Task; // Import the missing class
+use App\Policies\TaskPolicy; // Import the missing class
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -13,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Project::class => ProjectPolicy::class,
+        Task::class => TaskPolicy::class,
     ];
 
     /**

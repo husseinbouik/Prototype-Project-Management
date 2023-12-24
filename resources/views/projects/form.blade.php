@@ -33,6 +33,11 @@
                             method="POST"
                             action="{{ isset($project) ? route('projects.update', $project->id) : route('projects.store') }}">
                             @csrf
+                            @if(isset($project))
+                                @method('PUT')
+                            @else
+                                @method('POST')
+                            @endif
                             <div class="card-body">
                                 @if(isset($project))
                                     <div class="form-group">
