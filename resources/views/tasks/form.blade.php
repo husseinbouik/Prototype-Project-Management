@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">{{ isset($task) ? 'Edit Task' : 'Add Task' }}</li>
+                        <li class="breadcrumb-item active">{{ isset($task) ? 'Edit ' : 'Add ' }} Task</li>
                         <li class="breadcrumb-item"><a href="{{ url('/tasks') }}">Tasks</a> </li>
                     </ol>
                 </div>

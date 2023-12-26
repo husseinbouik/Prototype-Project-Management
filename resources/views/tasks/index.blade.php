@@ -17,9 +17,12 @@
                     <h1>List of tasks</h1>
                 </div>
                 <div class="col-sm-6">
+                    @can('manage tasks')
+
                     <div class="float-sm-right">
                         <a href="{{ url('/tasks/create') }}" class="btn btnAdd">Add New</a>
                     </div>
+                    @endcan
                 </div>
             </div>
         </div>

@@ -49,35 +49,63 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('users.create');
+        // Retrieve all permissions and roles
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        $roles = \Spatie\Permission\Models\Role::all();
+    
+        return view('users.create', compact('permissions', 'roles'));
     }
-
+    
     public function store(Request $request)
-{
-    // Validate and handle form submission
-    $data = $request->validate([
-        'first_name' => 'required|string',
-        'last_name' => 'required|string',
-        'email' => 'required|email|unique:users',
-        'role' => 'required|in:leader,member',
-        'password' => 'required|string|min:8', // Add any password validation rules as needed
-    ]);
-
-    // Hash the password
-    $data['password'] = bcrypt($data['password']);
-
-    $this->UserRepository->createUser($data);
-
-    // Redirect or respond as needed
-    return redirect()->route('users.index')->with('success', 'User created successfully');
-}
+    {
+        // Validate and handle form submission
+        $data = $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'role' => 'required|in:leader,member',
+            'password' => 'required|string|min:8', // Add any password validation rules as needed
+        ]);
+    
+        // Hash the password
+        $data['password'] = bcrypt($data['password']);
+    
+        // Create the user
+        $user = $this->UserRepository->createUser($data);
+    
+        // Assign roles and permissions if provided
+        if ($request->has('roles')) {
+            $roles = $request->input('roles');
+            $user->assignRole($roles);
+        }
+    
+        if ($request->has('permissions')) {
+            $permissions = $request->input('permissions');
+            $user->givePermissionTo($permissions);
+        }
+    
+        // Redirect or respond as needed
+        return redirect()->route('users.index')->with('success', 'User created successfully');
+    }
+    
+    
 
 
     public function edit($id)
     {
         $user = $this->UserRepository->getUserById($id);
-        return view('users.edit', compact('user'));
+    
+        // Eager load the 'permissions' relationship
+        $user->load('permissions');
+    
+        // Retrieve all permissions and roles
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        $roles = \Spatie\Permission\Models\Role::all();
+    
+        return view('users.edit', compact('user', 'permissions', 'roles'));
     }
+    
+
 
     public function update(Request $request, $id)
     {
@@ -100,11 +128,25 @@ class UserController extends Controller
             unset($data['password']);
         }
     
-        $this->UserRepository->update($id, $data);
+        // Update the user
+        $user = $this->UserRepository->update($id, $data);
+    
+        // Assign roles and permissions if provided
+        if ($request->has('roles')) {
+            $roles = $request->input('roles');
+            $user->syncRoles($roles);
+        }
+    
+        if ($request->has('permissions')) {
+            $permissions = $request->input('permissions');
+            $user->syncPermissions($permissions);
+        }
     
         // Redirect or respond as needed
         return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
+    
+
     
 
     public function destroy($id)

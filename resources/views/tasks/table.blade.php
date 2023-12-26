@@ -5,7 +5,9 @@
             <th>Description</th>
             <th>Start Date</th>
             <th>End Date</th>
+            @can('manage tasks')
             <th>Actions</th>
+            @endcan
         </tr>
     </thead>
     <tbody>

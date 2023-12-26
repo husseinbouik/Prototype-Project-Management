@@ -18,7 +18,14 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Project ',
             'last_name' => ' leader',
             'email' => 'ProjectLeader@gmail.com',
-            'password' => Hash::make('admin123'),
+            'password' => Hash::make('leader123'),
+            'role' => 'leader',
+        ]);
+        DB::table('users')->insert([
+            'first_name' => 'Member ',
+            'last_name' => ' 1',
+            'email' => 'member@gmail.com',
+            'password' => Hash::make('member123'),
             'role' => 'member',
         ]);
        }

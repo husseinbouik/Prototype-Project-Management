@@ -17,9 +17,12 @@
                     <h1>List of projects</h1>
                 </div>
                 <div class="col-sm-6">
+                    @can('manage projects')
+                        
                     <div class="float-sm-right">
                         <a href="{{ route('projects.create') }}" class="btn btnAdd">Add New</a>
                     </div>
+                    @endcan
                 </div>
             </div>
         </div>

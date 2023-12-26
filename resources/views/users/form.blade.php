@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Edit User</li>
+                        <li class="breadcrumb-item active">{{ isset($user) ? 'Edit ' : 'Add ' }} User</li>
                         <li class="breadcrumb-item"><a href="{{ url('/users') }}">User</a> </li>
                     </ol>
                 </div>
@@ -75,6 +75,32 @@
                                         <option value="member" {{ isset($user) && $user->role == 'member' ? 'selected' : '' }}>Member</option>
                                     </select>
                                     @error('role')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="permissions">Permissions</label>
+                                    <select name="permissions[]" class="form-control" id="permissions" multiple>
+                                        @foreach($permissions as $permission)
+                                            <option value="{{ $permission->name }}" {{ isset($user) && $user->hasPermissionTo($permission->name) ? 'selected' : '' }}>
+                                                {{ $permission->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('permissions')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="roles">Roles</label>
+                                    <select name="roles[]" class="form-control" id="roles" multiple>
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->name }}" {{ isset($user) && $user->hasRole($role->name) ? 'selected' : '' }}>
+                                                {{ $role->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('roles')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
