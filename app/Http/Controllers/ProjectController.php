@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProjectsExport;
+use App\Imports\ProjectsImport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
@@ -100,5 +102,22 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully');
     }
+
+    public function exportProjects()
+{
+    return Excel::download(new ProjectsExport, 'projects.xlsx');
+}
+public function importProjects(Request $request)
+{
+    $file = $request->file('file');
+    
+    try {
+        Excel::import(new ProjectsImport, $file, null, \Maatwebsite\Excel\Excel::XLSX);
+        return redirect()->route('home')->with('success', 'Projects imported successfully.');
+    } catch (\Exception $e) {
+        // Handle the exception (e.g., log it, display an error message)
+        return redirect()->route('home')->with('error', 'Error importing projects: ' . $e->getMessage());
+    }
+}
 
 }

@@ -31,12 +31,23 @@
 
     <td>
         <div class="float-left col-md-6 d-flex justify-content-end" >
+            @can('export users')
             <button type="button" class="btn btn-default mr-2 swalDefaultQuestion">
-                <i class="fas fa-download"></i> export
+                <a href="{{ route('export.users') }}">
+                    <i class="fas fa-download"></i> Export 
+                </a>
             </button>
-            <button type="button" class="btn btn-default swalDefaultQuestion">
-                <i class="fas fa-file-import"></i> import
-            </button>
+        @endcan
+    
+        @can('import users')
+            <form action="{{ route('import.users') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="file" class="d-none" id="fileInputMembers">
+                <button type="button" class="btn btn-default swalDefaultQuestion" onclick="document.getElementById('fileInputMembers').click()">
+                    <i class="fas fa-file-import"></i> Import 
+                </button>
+            </form>
+        @endcan
         </div>
     </td>
 </tr>

@@ -39,19 +39,23 @@
     <td>
             
         <div class="float-left col-md-6 d-flex justify-content-end" >
-        @can('export tasks')
-
+            @can('export tasks')
             <button type="button" class="btn btn-default mr-2 swalDefaultQuestion">
-                <i class="fas fa-download"></i> export
+                <a href="{{ route('export.tasks') }}">
+                    <i class="fas fa-download"></i> Export Tasks
+                </a>
             </button>
-            @endcan
-        @can('import tasks')
+        @endcan
     
-            <button type="button" class="btn btn-default swalDefaultQuestion">
-                <i class="fas fa-file-import"></i> import
-            </button>
-            @endcan
-
+        @can('import tasks')
+            <form action="{{ route('import.tasks') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="file" class="d-none" id="fileInputTasks">
+                <button type="button" class="btn btn-default swalDefaultQuestion" onclick="document.getElementById('fileInputTasks').click()">
+                    <i class="fas fa-file-import"></i> Import Tasks
+                </button>
+            </form>
+        @endcan
         </div>
     </td>
 </tr>

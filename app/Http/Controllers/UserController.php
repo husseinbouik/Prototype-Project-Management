@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Repository\UserRepository;
@@ -155,4 +157,15 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
+    public function exportUsers()
+    {
+        return Excel::download(new UsersExport, 'projects.xlsx');
+    }
+    public function importUsers(Request $request)
+{
+    $file = $request->file('file');
+    Excel::import(new UsersImport, $file);
+
+    return redirect()->back()->with('success', 'Projects imported successfully.');
+}
 }

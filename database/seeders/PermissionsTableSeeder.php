@@ -24,7 +24,7 @@ class PermissionsTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'name' => 'manage members',
+                'name' => 'manage users',
                 'guard_name' => 'web',
                 'created_at' => '2023-12-26 06:19:54',
                 'updated_at' => '2023-12-26 06:19:54',
@@ -93,13 +93,21 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2023-12-26 06:19:54',
                 'updated_at' => '2023-12-26 06:19:54',
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
-                'name' => 'manage users',
+                'name' => 'export users',
                 'guard_name' => 'web',
                 'created_at' => '2023-12-26 06:19:54',
                 'updated_at' => '2023-12-26 06:19:54',
+            ),
+            10 =>
+            array (
+                'id' => 11,
+                'name' => 'import users',
+                'guard_name' => 'web',
+                'created_at' => '2023-12-26 06:19:55',
+                'updated_at' => '2023-12-26 06:19:55',
             ),
         ));
         

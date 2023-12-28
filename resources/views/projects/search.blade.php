@@ -47,16 +47,28 @@
         <div class="float-left col-md-6 d-flex justify-content-end" >
         @can('export projects')
 
-            <button type="button" class="btn btn-default mr-2 swalDefaultQuestion">
-                <i class="fas fa-download"></i> export
-            </button>
-            @endcan
-        @can('import projects')
-    
-            <button type="button" class="btn btn-default swalDefaultQuestion">
-                <i class="fas fa-file-import"></i> import
-            </button>
-            @endcan
+          <!-- Your Blade File -->
+
+<button type="button" class="btn btn-default mr-2 swalDefaultQuestion">
+    <a href="{{ route('export.projects') }}">
+        <i class="fas fa-download"></i> Export
+    </a>
+</button>
+
+@endcan
+
+@can('import projects')
+<form action="{{ route('import.projects') }}" method="post" enctype="multipart/form-data"
+id="importForm">
+@csrf
+<label for="upload" class="btn btn-default btn-sm mb-0 font-weight-normal">
+    <i class="fa-solid fa-file-arrow-down"></i>
+    {{ __('IMPORTER') }}
+</label>
+<input type="file" id="upload" name="file" style="display:none;"
+    onchange="submitForm()" />
+</form>
+@endcan
 
         </div>
     </td>

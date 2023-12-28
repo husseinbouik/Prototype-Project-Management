@@ -58,6 +58,16 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });
 
+
+
+Route::get('/export-projects', [ProjectController::class, 'exportProjects'])->name('export.projects')->middleware('can:export projects');;
+Route::post('/import-projects', [ProjectController::class, 'importProjects'])->name('import.projects')->middleware('can:import projects');;
+
+Route::get('/export-tasks', [TaskController::class, 'exportTasks'])->name('export.tasks')->middleware('can:export tasks');;
+Route::post('/import-tasks', [TaskController::class, 'importTasks'])->name('import.tasks')->middleware('can:import tasks');;
+
+Route::get('/export-users', [UserController::class, 'exportUsers'])->name('export.users')->middleware('can:export users');;
+Route::post('/import-users', [UserController::class, 'importUsers'])->name('import.users')->middleware('can:import users');;
 });
 
 

@@ -14,12 +14,16 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $now = now();
+
         DB::table('users')->insert([
             'first_name' => 'Project ',
             'last_name' => ' leader',
             'email' => 'ProjectLeader@gmail.com',
             'password' => Hash::make('leader123'),
             'role' => 'leader',
+            'created_at' => $now,
+            'updated_at' => $now,
         ]);
         DB::table('users')->insert([
             'first_name' => 'Member ',
@@ -27,6 +31,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'member@gmail.com',
             'password' => Hash::make('member123'),
             'role' => 'member',
+            'created_at' => $now,
+            'updated_at' => $now,
         ]);
        }
 }

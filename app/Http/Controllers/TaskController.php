@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TasksExport;
+use App\Imports\TasksImport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Task;
@@ -99,4 +101,15 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
     }
+    public function exportTasks()
+    {
+        return Excel::download(new TasksExport, 'projects.xlsx');
+    }
+    public function importProjects(Request $request)
+{
+    $file = $request->file('file');
+    Excel::import(new TasksImport, $file);
+
+    return redirect()->back()->with('success', 'Projects imported successfully.');
+}
 }
