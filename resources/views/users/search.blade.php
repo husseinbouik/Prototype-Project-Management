@@ -27,6 +27,8 @@
         </div>
     </td>
     <td></td>
+    <td></td>
+
     <td>
         <div class="float-left col-md-6 d-flex justify-content-end" >
             <button type="button" class="btn btn-default mr-2 swalDefaultQuestion">

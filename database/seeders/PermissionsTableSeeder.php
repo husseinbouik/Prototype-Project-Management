@@ -93,6 +93,14 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2023-12-26 06:19:54',
                 'updated_at' => '2023-12-26 06:19:54',
             ),
+            9 => 
+            array (
+                'id' => 10,
+                'name' => 'manage users',
+                'guard_name' => 'web',
+                'created_at' => '2023-12-26 06:19:54',
+                'updated_at' => '2023-12-26 06:19:54',
+            ),
         ));
         
         

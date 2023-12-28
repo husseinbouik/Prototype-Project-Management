@@ -30,8 +30,10 @@ class RolesAndPermissionsSeeder extends Seeder
         $exportProjectPermission = Permission::create(['name' => 'export projects']);
         $importTaskPermission = Permission::create(['name' => 'import tasks']);
         $importProjectPermission = Permission::create(['name' => 'import projects']);
+        $manageUserPermission = Permission::create(['name' => 'manage users']); // Add this line
+
         // Assign permissions to roles
-        $adminRole->givePermissionTo($manageMemberPermission, $manageProjectPermission, $manageTaskPermission, $exportTaskPermission,$importTaskPermission,$importProjectPermission,$exportProjectPermission);
+        $adminRole->givePermissionTo($manageMemberPermission, $manageProjectPermission, $manageTaskPermission, $exportTaskPermission,$importTaskPermission,$importProjectPermission,$exportProjectPermission, $manageUserPermission); // Add $manageUserPermission here
         $memberRole->givePermissionTo($viewTaskPermission, $viewProjectPermission);
 
         // You can assign roles to users here if needed
