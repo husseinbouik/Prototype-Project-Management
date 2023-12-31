@@ -9,6 +9,12 @@
         {{ session('success') }}
     </div>
 @endif
+@if ($errors->has('error'))
+    <div class="alert alert-danger">
+        {{ $errors->first('error') }}
+    </div>
+@endif
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">

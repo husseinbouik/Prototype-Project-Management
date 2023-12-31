@@ -162,10 +162,16 @@ class UserController extends Controller
         return Excel::download(new UsersExport, 'projects.xlsx');
     }
     public function importUsers(Request $request)
-{
-    $file = $request->file('file');
-    Excel::import(new UsersImport, $file);
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx',
+        ]);
 
-    return redirect()->back()->with('success', 'Projects imported successfully.');
-}
+        $file = $request->file('file');
+
+        Excel::import(new UsersImport, $file);
+
+        return redirect()->back()->with('success', 'Users imported successfully.');
+    }
+
 }
