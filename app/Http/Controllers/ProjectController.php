@@ -109,15 +109,14 @@ class ProjectController extends Controller
 }
 public function importProjects(Request $request)
 {
+    $request->validate([
+        'file' => 'required|mimes:csv,xls,xlsx',
+    ]);
     $file = $request->file('file');
     
-    try {
-        Excel::import(new ProjectsImport, $file, null, \Maatwebsite\Excel\Excel::XLSX);
-        return redirect()->route('home')->with('success', 'Projects imported successfully.');
-    } catch (\Exception $e) {
-        // Handle the exception (e.g., log it, display an error message)
-        return redirect()->route('home')->with('error', 'Error importing projects: ' . $e->getMessage());
-    }
+        Excel::import(new ProjectsImport, $file);
+        return redirect()->back()->with('success', 'Users imported successfully.');
+
 }
 
 }

@@ -14,12 +14,12 @@ class TasksExport implements FromCollection , WithHeadings
     */
     public function collection()
     {
-        return Task::all(['name', 'description', 'start_date', 'end_date']);
+        return Task::all(['project_id','name', 'description', 'start_date', 'end_date']);
     }
     public function headings(): array
     {
         return [
-            'Name', 'Description', 'Created At', 'Updated At',
+            'Project Id','Name', 'Description', 'Start Date', 'End Date'
         ];
     }
 }

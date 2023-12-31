@@ -105,8 +105,11 @@ class TaskController extends Controller
     {
         return Excel::download(new TasksExport, 'projects.xlsx');
     }
-    public function importProjects(Request $request)
+    public function importTasks(Request $request)
 {
+    $request->validate([
+        'file' => 'required|mimes:csv,xls,xlsx',
+    ]);
     $file = $request->file('file');
     Excel::import(new TasksImport, $file);
 

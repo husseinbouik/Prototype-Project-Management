@@ -15,10 +15,11 @@ class TasksImport implements ToModel
     public function model(array $row)
     {
         return new Task([
-            'name' => $row[0], // Assuming the name is in the second column
-            'description' => $row[1],
-            'start_date' => $row[2],
-            'end_date' => $row[3],
+            'project_id' => (int) $row[0],
+            'name' => $row[1], // Assuming the name is in the second column
+            'description' => $row[2],
+            'start_date' => $row[3],
+            'end_date' => $row[4],
              ]);
     }
 }

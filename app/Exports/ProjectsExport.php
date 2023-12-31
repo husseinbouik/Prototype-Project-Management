@@ -14,7 +14,7 @@ class ProjectsExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Name', 'Description', 'Created At', 'Updated At',
+            'Name', 'Description', 'Start Date', 'End Date',
         ];
     }
 }

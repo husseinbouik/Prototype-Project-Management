@@ -48,13 +48,32 @@
         @endcan
     
         @can('import tasks')
-            <form action="{{ route('import.tasks') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <input type="file" name="file" class="d-none" id="fileInputTasks">
-                <button type="button" class="btn btn-default swalDefaultQuestion" onclick="document.getElementById('fileInputTasks').click()">
-                    <i class="fas fa-file-import"></i> Import Tasks
-                </button>
-            </form>
+        <form action="{{ route('import.tasks') }}" method="post" enctype="multipart/form-data" class="ml-2">
+            @csrf
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="importFile" name="file" accept=".csv, .xls, .xlsx" required>
+                    <label class="custom-file-label" for="importFile">Choose a file</label>
+                </div>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Import
+                    </button>
+                </div>
+            </div>
+            <small class="form-text text-muted">
+                Accepted file formats: CSV, XLS, XLSX. Maximum file size: 10MB.
+            </small>
+        </form>
+
+        <!-- JavaScript to update file label -->
+        <script>
+            document.getElementById('importFile').addEventListener('change', function (e) {
+                var fileName = e.target.files[0].name;
+                var fileLabel = document.querySelector('.custom-file-label');
+                fileLabel.textContent = fileName;
+            });
+        </script>
         @endcan
         </div>
     </td>
