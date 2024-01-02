@@ -50,13 +50,6 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea id="description" name="description">{{ isset($project) ? $project->description : old('description') }}</textarea>
-                                    @error('description')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
 
                                 <!-- New input fields for start_date and end_date -->
                                 <div class="form-group">
@@ -74,6 +67,14 @@
                                     value="{{ isset($project) ? ($project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('Y-m-d') : old('end_date')) : '' }}"
                                     >
                                     @error('end_date')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" name="description">{{ isset($project) ? $project->description : old('description') }}</textarea>
+                                    @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

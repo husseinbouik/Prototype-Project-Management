@@ -20,6 +20,8 @@ import 'admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4
 import 'admin-lte/plugins/daterangepicker/daterangepicker.js';
 import 'admin-lte/plugins/summernote/summernote-bs4.min.js';
 import 'admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js';
+import 'https://code.jquery.com/jquery-3.6.0.min.js';
+import 'https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js';
 // Import other AdminLTE scripts here
 
 
